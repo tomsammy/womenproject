@@ -4,5 +4,10 @@
     { "src": "api/**/*.js", "use": "@vercel/node" },
     { "src": "!(api|node_modules|local-server.js)/**/*", "use": "@vercel/static" },
     { "src": "*", "use": "@vercel/static" }
+  ],
+  "rewrites": [
+    { "source": "/api/config", "destination": "/api/config.js" },
+    { "source": "/api/apply", "destination": "/api/apply.js" },
+    { "source": "/api/donations", "destination": "/api/donations.js" }
   ]
 }
