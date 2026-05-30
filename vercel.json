@@ -8,6 +8,8 @@
   "rewrites": [
     { "source": "/api/config", "destination": "/api/config.js" },
     { "source": "/api/apply", "destination": "/api/apply.js" },
-    { "source": "/api/donations", "destination": "/api/donations.js" }
+    { "source": "/api/donations", "destination": "/api/donations.js" },
+    { "source": "/api/admin/applicants", "destination": "/api/admin/applicants.js" },
+    { "source": "/api/admin/donations", "destination": "/api/admin/donations.js" }
   ]
 }

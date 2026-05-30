@@ -181,6 +181,41 @@ app.post('/api/donations', async (req, res) => {
     }
 });
 
+// Local Admin Routes
+app.get('/api/admin/applicants', async (req, res) => {
+    const authHeader = req.headers.authorization;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+    if (!authHeader || authHeader !== adminPassword) {
+        return res.status(401).json({ success: false, message: 'Unauthorized.' });
+    }
+
+    try {
+        const [rows] = await dbPool.query('SELECT * FROM applications ORDER BY applied_at DESC');
+        res.json({ success: true, data: rows });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Database error.' });
+    }
+});
+
+app.get('/api/admin/donations', async (req, res) => {
+    const authHeader = req.headers.authorization;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+    if (!authHeader || authHeader !== adminPassword) {
+        return res.status(401).json({ success: false, message: 'Unauthorized.' });
+    }
+
+    try {
+        const [rows] = await dbPool.query('SELECT * FROM donations ORDER BY donated_at DESC');
+        res.json({ success: true, data: rows });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Database error.' });
+    }
+});
+
 // Serve frontend for all other requests
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

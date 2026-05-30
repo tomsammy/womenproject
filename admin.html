@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Woman Africa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --primary: #4A154B;
+            --primary-dark: #2D0D2E;
+            --primary-light: #6B2D6C;
+            --accent: #D4AF37;
+            --white: #ffffff;
+            --bg-light: #f4f6fa;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --success: #2e7d32;
+            --radius: 12px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(74, 21, 75, 0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Header / Navigation --- */
+        .admin-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline-white {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: var(--white);
+        }
+
+        .btn-outline-white:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        /* --- Dashboard Container --- */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+            display: none; /* Shown after login success */
+        }
+
+        /* --- Statistics Cards --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info p {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.1;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(74, 21, 75, 0.08);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background-color: rgba(212, 175, 55, 0.12);
+            color: #b89014;
+        }
+
+        /* --- Section Toggles --- */
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            gap: 2rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 0;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- Data Tables --- */
+        .table-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #fcfdfe;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .text-primary-color {
+            color: var(--primary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background-color: rgba(46, 125, 50, 0.12);
+            color: var(--success);
+        }
+
+        .badge-accent {
+            background-color: rgba(212, 175, 55, 0.15);
+            color: #b89014;
+        }
+
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* --- Login Overlay --- */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: var(--primary-dark);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 420px;
+            border-radius: var(--radius);
+            padding: 3rem 2.5rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.9rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            outline: none;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .login-form input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 21, 75, 0.1);
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 0.9rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-form button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .login-error {
+            color: #d32f2f;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* --- Detail Modal --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 650px;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: var(--transition);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .modal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .modal-body h4 {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .modal-body p {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #334155;
+            border-left: 4px solid var(--accent);
+            line-height: 1.6;
+        }
+
+        /* --- Empty State --- */
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+
+        .empty-state p {
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-card">
+            <a href="#" class="brand" style="justify-content: center; margin-bottom: 1.5rem;">
+                <img src="1601772810018.jpg" alt="Woman Africa Logo" class="brand-logo" onerror="this.src='https://ui-avatars.com/api/?name=WA&background=4A154B&color=fff'">
+                <div class="brand-text" style="text-align: left;">
+                    <span class="brand-title" style="color: var(--primary);">Woman Africa</span>
+                    <span class="brand-subtitle">Admin Dashboard</span>
+                </div>
+            </a>
+            <h2>Welcome Back</h2>
+            <p>Please enter the administrator access password.</p>
+            <form class="login-form" id="login-form">
+                <input type="password" id="admin-password" placeholder="Access Password" required autocomplete="current-password">
+                <button type="submit">Unlock Dashboard</button>
+                <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="admin-header">
+        <a href="#" class="brand">
+            <img src="1601772810018.jpg" alt="Woman Africa Logo" class="brand-logo" onerror="this.src='https://ui-avatars.com/api/?name=WA&background=4A154B&color=fff'">
+            <div class="brand-text">
+                <span class="brand-title">Woman Africa</span>
+                <span class="brand-subtitle">International Foundation</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="btn btn-outline-white" id="logout-btn"><i data-lucide="log-out"></i> Logout</button>
+        </div>
+    </header>
+
+    <!-- Dashboard Main Content -->
+    <main class="dashboard-container" id="dashboard">
+        
+        <!-- Stats Cards Row -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Total Applicants</h3>
+                    <p id="stat-applicants-count">0</p>
+                </div>
+                <div class="stat-icon">
+                    <i data-lucide="users"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Total Donations</h3>
+                    <p id="stat-donations-total">₦0.00</p>
+                </div>
+                <div class="stat-icon">
+                    <i data-lucide="heart"></i>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Donation Transactions</h3>
+                    <p id="stat-donations-count">0</p>
+                </div>
+                <div class="stat-icon">
+                    <i data-lucide="receipt"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Navigation Tabs -->
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('tab-applicants')">Job Applications</button>
+            <button class="tab-btn" onclick="switchTab('tab-donations')">Donations Logs</button>
+        </div>
+
+        <!-- Job Applications Tab -->
+        <div class="tab-content active" id="tab-applicants">
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table id="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Job Applied</th>
+                                <th>Applied Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicants-list">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="applicants-empty" style="display: none;">
+                    <i data-lucide="user-x"></i>
+                    <p>No job applications found in database.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donations Tab -->
+        <div class="tab-content" id="tab-donations">
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table id="donations-table">
+                        <thead>
+                            <tr>
+                                <th>Donor</th>
+                                <th>Email</th>
+                                <th>Amount</th>
+                                <th>Reference</th>
+                                <th>Status</th>
+                                <th>Donation Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donations-list">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="donations-empty" style="display: none;">
+                    <i data-lucide="heart-off"></i>
+                    <p>No donations logs found in database.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- View Candidate Detail Modal -->
+    <div class="modal-overlay" id="detail-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close"><i data-lucide="x"></i></button>
+            <div class="modal-header">
+                <h3 id="detail-name">Candidate Name</h3>
+                <span id="detail-job" class="badge badge-accent">Executive Assistant</span>
+                <div class="modal-meta">
+                    <span id="detail-email"><i data-lucide="mail"></i> email@example.com</span>
+                    <span id="detail-phone"><i data-lucide="phone"></i> +234 123 4567</span>
+                    <span id="detail-date"><i data-lucide="calendar"></i> 2026-05-30</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h4>Why are they a good fit?</h4>
+                <p id="detail-fit">Applicant answers will load here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Variables ---
+        let adminPassword = "";
+        let applicants = [];
+        let donations = [];
+
+        // DOM elements
+        const loginOverlay = document.getElementById('login-overlay');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const adminPasswordInput = document.getElementById('admin-password');
+        const dashboard = document.getElementById('dashboard');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Modal elements
+        const detailModal = document.getElementById('detail-modal');
+        const modalClose = document.getElementById('modal-close');
+
+        // --- Authentication & Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if password already stored in session
+            const savedPassword = sessionStorage.getItem('admin_access_token');
+            if (savedPassword) {
+                adminPassword = savedPassword;
+                loadDashboardData();
+            }
+            lucide.createIcons();
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            adminPassword = adminPasswordInput.value.trim();
+            loginError.style.display = 'none';
+            
+            // Try fetching data to verify authentication password
+            loadDashboardData(true);
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('admin_access_token');
+            adminPassword = "";
+            dashboard.style.display = 'none';
+            loginOverlay.style.display = 'flex';
+            adminPasswordInput.value = "";
+        });
+
+        // --- Fetch & Load Dashboard Data ---
+        function loadDashboardData(isFirstLogin = false) {
+            // Fetch Applicants
+            fetch('/api/admin/applicants', {
+                headers: { 'Authorization': adminPassword }
+            })
+            .then(res => {
+                if (res.status === 401) throw new Error('UNAUTHORIZED');
+                return res.json();
+            })
+            .then(data => {
+                applicants = data.data || [];
+                
+                // If it worked, password is valid! Save it and load the rest
+                if (isFirstLogin) {
+                    sessionStorage.setItem('admin_access_token', adminPassword);
+                    loginOverlay.style.display = 'none';
+                    dashboard.style.display = 'block';
+                }
+                
+                renderApplicants();
+                updateStats();
+                
+                // Now fetch donations
+                return fetch('/api/admin/donations', {
+                    headers: { 'Authorization': adminPassword }
+                });
+            })
+            .then(res => {
+                if (res && res.status !== 401) {
+                    return res.json();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    donations = data.data || [];
+                    renderDonations();
+                    updateStats();
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                if (err.message === 'UNAUTHORIZED') {
+                    loginError.style.display = 'block';
+                    sessionStorage.removeItem('admin_access_token');
+                } else {
+                    alert('An error occurred while connecting to Vercel API. Check console logs.');
+                }
+            });
+        }
+
+        // --- Tab Switching ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activate selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // --- Stats Card Updates ---
+        function updateStats() {
+            // Total applicants
+            document.getElementById('stat-applicants-count').textContent = applicants.length;
+            
+            // Total donations and count
+            document.getElementById('stat-donations-count').textContent = donations.length;
+            
+            const totalAmount = donations.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+            document.getElementById('stat-donations-total').textContent = `₦${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+        }
+
+        // --- Rendering Lists ---
+        function renderApplicants() {
+            const listContainer = document.getElementById('applicants-list');
+            const emptyState = document.getElementById('applicants-empty');
+            const table = document.getElementById('applicants-table');
+            
+            listContainer.innerHTML = '';
+            
+            if (applicants.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            applicants.forEach((candidate, index) => {
+                const tr = document.createElement('tr');
+                const formattedDate = new Date(candidate.applied_at).toLocaleString();
+                
+                tr.innerHTML = `
+                    <td class="font-semibold text-primary-color">${escapeHtml(candidate.full_name)}</td>
+                    <td>${escapeHtml(candidate.email)}</td>
+                    <td>${escapeHtml(candidate.phone)}</td>
+                    <td><span class="badge badge-accent">${escapeHtml(candidate.job_title)}</span></td>
+                    <td style="color: var(--text-muted); font-size: 0.88rem;">${formattedDate}</td>
+                    <td><button class="btn-action" onclick="openCandidateDetail(${index})">View Details</button></td>
+                `;
+                listContainer.appendChild(tr);
+            });
+        }
+
+        function renderDonations() {
+            const listContainer = document.getElementById('donations-list');
+            const emptyState = document.getElementById('donations-empty');
+            const table = document.getElementById('donations-table');
+            
+            listContainer.innerHTML = '';
+            
+            if (donations.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            donations.forEach((donation) => {
+                const tr = document.createElement('tr');
+                const formattedDate = new Date(donation.donated_at).toLocaleString();
+                
+                tr.innerHTML = `
+                    <td class="font-semibold">${escapeHtml(donation.full_name)}</td>
+                    <td>${escapeHtml(donation.email)}</td>
+                    <td class="font-semibold text-primary-color">₦${parseFloat(donation.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                    <td style="font-family: monospace; font-size: 0.85rem;">${escapeHtml(donation.reference)}</td>
+                    <td><span class="badge badge-success">${escapeHtml(donation.status)}</span></td>
+                    <td style="color: var(--text-muted); font-size: 0.88rem;">${formattedDate}</td>
+                `;
+                listContainer.appendChild(tr);
+            });
+        }
+
+        // --- Detail Modal Open/Close ---
+        function openCandidateDetail(index) {
+            const candidate = applicants[index];
+            if (!candidate) return;
+
+            document.getElementById('detail-name').textContent = candidate.full_name;
+            document.getElementById('detail-job').textContent = candidate.job_title;
+            document.getElementById('detail-email').innerHTML = `<i data-lucide="mail"></i> ${candidate.email}`;
+            document.getElementById('detail-phone').innerHTML = `<i data-lucide="phone"></i> ${candidate.phone}`;
+            document.getElementById('detail-date').innerHTML = `<i data-lucide="calendar"></i> ${new Date(candidate.applied_at).toLocaleDateString()}`;
+            document.getElementById('detail-fit').textContent = candidate.why_fit;
+
+            detailModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeDetailModal() {
+            detailModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeDetailModal);
+        detailModal.addEventListener('click', (e) => {
+            if (e.target === detailModal) {
+                closeDetailModal();
+            }
+        });
+
+        // --- Helper: HTML Escaping ---
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
