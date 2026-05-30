@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "!(api|node_modules|local-server.js)/**/*", "use": "@vercel/static" },
+    { "src": "*", "use": "@vercel/static" }
+  ]
+}
