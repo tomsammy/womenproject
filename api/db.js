@@ -11,24 +11,35 @@ async function getDbPool() {
         return pool;
     }
 
+    const dbName = process.env.DB_NAME || 'womenproject';
     const config = {
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '',
-        port: parseInt(process.env.DB_PORT || '3306')
+        port: parseInt(process.env.DB_PORT || '3306'),
+        database: dbName
     };
 
     try {
-        // Step 1: Connect to MySQL server without a database to create it if it doesn't exist
-        const connection = await mysql.createConnection(config);
-        const dbName = process.env.DB_NAME || 'womenproject';
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
-        await connection.end();
+        // Step 1: Only attempt to create database if running on localhost (e.g. local XAMPP)
+        if (config.host === 'localhost' || config.host === '127.0.0.1') {
+            try {
+                const connection = await mysql.createConnection({
+                    host: config.host,
+                    user: config.user,
+                    password: config.password,
+                    port: config.port
+                });
+                await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
+                await connection.end();
+            } catch (err) {
+                console.log('Local database auto-creation skipped:', err.message);
+            }
+        }
 
-        // Step 2: Create pool
+        // Step 2: Connect directly using the pool
         pool = mysql.createPool({
             ...config,
-            database: dbName,
             waitForConnections: true,
             connectionLimit: 5,
             queueLimit: 0
