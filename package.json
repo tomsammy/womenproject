@@ -2,10 +2,10 @@
   "name": "womenproject-backend",
   "version": "1.0.0",
   "description": "Backend for Woman Africa International Foundation Job Portal with MySQL database integration",
-  "main": "server.js",
+  "main": "local-server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node local-server.js",
+    "dev": "node local-server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
