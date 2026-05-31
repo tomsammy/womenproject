@@ -44,6 +44,13 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Background Image Slides -->
+        <div class="hero-slides" id="hero-slides">
+            <div class="slide active" style="background-image: url('Image1.png');"></div>
+            <div class="slide" style="background-image: url('image2.png');"></div>
+            <div class="slide" style="background-image: url('image 3.png');"></div>
+            <div class="slide" style="background-image: url('image4.jpg');"></div>
+        </div>
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <span class="tagline">Humanitarian & Workforce Empowerment</span>
@@ -54,7 +61,24 @@
                 <a href="#partners" class="btn btn-outline">Partner With Us</a>
             </div>
         </div>
+
+        <!-- Slider Controls -->
+        <button class="slider-arrow prev" id="prev-slide" aria-label="Previous Slide">
+            <i data-lucide="chevron-left"></i>
+        </button>
+        <button class="slider-arrow next" id="next-slide" aria-label="Next Slide">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+        <!-- Slider Dots -->
+        <div class="slider-dots" id="slider-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
     </section>
+
 
     <!-- Founder Section (Prominent) -->
     <section class="founder-section" id="founder">

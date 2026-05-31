@@ -405,6 +405,7 @@ donationForm.addEventListener('submit', (e) => {
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
     renderJobs();
+    initHeroSlider();
     
     // Intercept all donate link clicks to open modal
     document.querySelectorAll('a[href="#donate"]').forEach(anchor => {
@@ -417,3 +418,94 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set variable for header padding transition
     header.style.transition = 'padding 0.3s ease, box-shadow 0.3s ease';
 });
+
+// --- Hero Section Image Slider ---
+function initHeroSlider() {
+    const slides = document.querySelectorAll('.hero-slides .slide');
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    const heroSection = document.getElementById('home');
+    
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+    let slideInterval;
+    const intervalTime = 5000; // 5 seconds
+
+    // Fallback logic for slide 4 (image4.jpg)
+    const fourthSlide = slides[3];
+    if (fourthSlide) {
+        const img = new Image();
+        img.src = 'image4.jpg';
+        img.onerror = () => {
+            console.log('image4.jpg not found, falling back to Image1.png for hero slider.');
+            fourthSlide.style.backgroundImage = "url('Image1.png')";
+        };
+    }
+
+    function showSlide(index) {
+        // Remove active class from current slide and dot
+        slides[currentSlide].classList.remove('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+
+        // Set current slide index
+        currentSlide = (index + slides.length) % slides.length;
+
+        // Add active class to new slide and dot
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    // Auto Play Timer
+    function startSlideShow() {
+        stopSlideShow();
+        slideInterval = setInterval(nextSlide, intervalTime);
+    }
+
+    function stopSlideShow() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+        }
+    }
+
+    // Event Listeners for Controls
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startSlideShow(); // Reset timer on manual click
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startSlideShow(); // Reset timer on manual click
+        });
+    }
+
+    // Dots navigation
+    dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+            showSlide(idx);
+            startSlideShow(); // Reset timer on manual click
+        });
+    });
+
+    // Pause on Hover
+    if (heroSection) {
+        heroSection.addEventListener('mouseenter', stopSlideShow);
+        heroSection.addEventListener('mouseleave', startSlideShow);
+    }
+
+    // Start slideshow
+    startSlideShow();
+}
