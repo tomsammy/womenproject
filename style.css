@@ -442,49 +442,104 @@ img {
     margin-bottom: 1.5rem;
 }
 
-.gbv-campaign {
+/* --- Founder Gallery & Pillars Styles --- */
+.founder-gallery {
     display: flex;
-    gap: 1.5rem;
-    background-color: var(--white);
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-    margin: 2rem 0;
-    border: 1px solid rgba(74, 21, 75, 0.1);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    justify-content: center;
 }
 
-.gbv-icon {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(212, 175, 55, 0.15);
-    color: var(--accent);
+.gallery-thumb {
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.gallery-thumb:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.gallery-thumb.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(74, 21, 75, 0.15);
+}
+
+.founder-bio-text {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.founder-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.pillar-card {
+    background: var(--white);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--accent);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: var(--transition);
+    border-top: 1px solid rgba(0,0,0,0.01);
+    border-right: 1px solid rgba(0,0,0,0.01);
+    border-bottom: 1px solid rgba(0,0,0,0.01);
+}
+
+.pillar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.pillar-icon {
+    color: var(--primary);
+    background-color: rgba(74, 21, 75, 0.08);
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    transition: var(--transition);
 }
 
-.gbv-text h4 {
-    color: var(--primary);
-    margin-bottom: 0.5rem;
+.pillar-card:hover .pillar-icon {
+    background-color: var(--primary);
+    color: var(--white);
 }
 
-.awards-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.pillar-icon i {
+    width: 20px;
+    height: 20px;
 }
 
-.award-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-weight: 500;
+.pillar-info h4 {
+    color: var(--primary-dark);
+    font-size: 0.98rem;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
 }
 
-.award-item i {
-    color: var(--accent);
+.pillar-info p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin: 0;
 }
 
 /* --- Dual Model Section --- */

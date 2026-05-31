@@ -84,37 +84,69 @@
     <section class="founder-section" id="founder">
         <div class="container">
             <div class="founder-grid">
+                <!-- Left Column: Interactive Photo Gallery -->
                 <div class="founder-image-col">
                     <div class="image-wrapper">
-                        <img src="16048716_img20220902wa0006_jpeg8a4d2e9de06afa44ad1615400a8df096.jpg" alt="Rev. Ijeoma Emeribe" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80'" class="founder-img">
+                        <img src="4187631_revijeomaemeribe_jpegff70aadbca8dff7d213cb7941242b79d.jpg" alt="Rev. Dr. Ijeoma Emeribe" id="founder-main-img" class="founder-img" onerror="this.src='16048716_img20220902wa0006_jpeg8a4d2e9de06afa44ad1615400a8df096.jpg'">
                         <div class="award-badge">
                             <i data-lucide="award"></i>
                             <span>Philanthropist of the Year</span>
                         </div>
                     </div>
+                    <!-- Thumbnails tray -->
+                    <div class="founder-gallery">
+                        <img src="4187631_revijeomaemeribe_jpegff70aadbca8dff7d213cb7941242b79d.jpg" alt="Rev. Dr. Ijeoma Emeribe portrait" class="gallery-thumb active" onclick="changeFounderImg(this)">
+                        <img src="16048716_img20220902wa0006_jpeg8a4d2e9de06afa44ad1615400a8df096.jpg" alt="Rev. Dr. Ijeoma Emeribe profile" class="gallery-thumb" onclick="changeFounderImg(this)">
+                        <img src="images.jpg" alt="Rev. Dr. Ijeoma Emeribe and partners" class="gallery-thumb" onclick="changeFounderImg(this)" onerror="this.style.display='none'">
+                        <img src="images (1).jpg" alt="Rev. Dr. Ijeoma Emeribe speaking" class="gallery-thumb" onclick="changeFounderImg(this)" onerror="this.style.display='none'">
+                    </div>
                 </div>
+
+                <!-- Right Column: Expanded Biography & Pillars -->
                 <div class="founder-content-col">
                     <div class="section-header">
                         <h2>Meet Our Founder</h2>
-                        <h3>Rev. Ijeoma Eteng Emeribe</h3>
+                        <h3>Rev. Dr. Ijeoma Eteng Emeribe</h3>
                     </div>
-                    <p class="lead-text">"I am Ijeoma Emeribe. Our mission is to empower and restore dignity to vulnerable and displaced women across Africa by connecting them to sustainable job opportunities in partnership with international employers."</p>
-                    <p>A woman of vision, an advocate for vulnerable women and children, and a change agent. Rev. Ijeoma Emeribe leads Woman Africa International with a calling to empower women globally.</p>
+                    <p class="lead-text">"Our calling is to create sustainable safe spaces and write new economic realities for women across Africa through international career pathways."</p>
                     
-                    <div class="gbv-campaign">
-                        <div class="gbv-icon">
-                            <i data-lucide="shield"></i>
-                        </div>
-                        <div class="gbv-text">
-                            <h4>365 Days of Activism Against GBV</h4>
-                            <p>Moving beyond the standard 16 days, we are creating sustainable SAFE spaces and driving the adoption of policy frameworks to end Gender-Based Violence in Nigeria and Africa.</p>
-                        </div>
-                    </div>
+                    <p class="founder-bio-text">
+                        Rev. Dr. Ijeoma Eteng Emeribe is an ordained minister, visionary social entrepreneur, and global humanitarian advocate. As the founder and president of <strong>Woman Africa International</strong>, she leads critical interventions that restore dignity to marginalized women and vulnerable groups, bridging direct relief with long-term global career paths.
+                    </p>
 
-                    <div class="awards-list">
-                        <div class="award-item"><i data-lucide="check-circle-2"></i> Best Women Empowerment Firm of the Year</div>
-                        <div class="award-item"><i data-lucide="check-circle-2"></i> Golden Heart Award for Humanitarian Services</div>
-                        <div class="award-item"><i data-lucide="check-circle-2"></i> Distinguished Woman Leader's Award</div>
+                    <!-- Columns Grid -->
+                    <div class="founder-pillars-grid">
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i data-lucide="award"></i></div>
+                            <div class="pillar-info">
+                                <h4>NYC Patroness</h4>
+                                <p>Appointed Patroness of the Nigerian Youth Congress (NYC) in June 2022 due to her global leadership experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i data-lucide="shield-check"></i></div>
+                            <div class="pillar-info">
+                                <h4>365 Days of Anti-GBV</h4>
+                                <p>Spearheading year-round SAFE shelter initiatives and policy changes to support domestic abuse survivors.</p>
+                            </div>
+                        </div>
+
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i data-lucide="scale"></i></div>
+                            <div class="pillar-info">
+                                <h4>National Policy Voice</h4>
+                                <p>Public advocate calling for transparency, accountability, and qualified humanitarians in public welfare offices.</p>
+                            </div>
+                        </div>
+
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i data-lucide="heart"></i></div>
+                            <div class="pillar-info">
+                                <h4>Family & Parenting</h4>
+                                <p>Promoting family love and proper parenting training as a primary vehicle to combat domestic violence.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

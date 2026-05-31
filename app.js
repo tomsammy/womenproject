@@ -509,3 +509,20 @@ function initHeroSlider() {
     // Start slideshow
     startSlideShow();
 }
+
+// --- Founder Interactive Photo Gallery ---
+window.changeFounderImg = function(el) {
+    const mainImg = document.getElementById('founder-main-img');
+    if (mainImg) {
+        mainImg.src = el.src;
+    }
+    // Update active state on thumbnails
+    const thumbs = document.querySelectorAll('.gallery-thumb');
+    thumbs.forEach(thumb => {
+        if (thumb === el) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
+        }
+    });
+};
