@@ -216,6 +216,11 @@ app.get('/api/admin/donations', async (req, res) => {
     }
 });
 
+// Local route for extensionless staffing page
+app.get('/staffing', (req, res) => {
+    res.sendFile(path.join(__dirname, 'staffing.html'));
+});
+
 // Serve frontend for all other requests
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

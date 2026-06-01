@@ -6,6 +6,7 @@
     { "src": "*", "use": "@vercel/static" }
   ],
   "rewrites": [
+    { "source": "/staffing", "destination": "/staffing.html" },
     { "source": "/api/config", "destination": "/api/config.js" },
     { "source": "/api/apply", "destination": "/api/apply.js" },
     { "source": "/api/donations", "destination": "/api/donations.js" },
