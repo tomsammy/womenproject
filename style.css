@@ -901,6 +901,15 @@ img {
     flex-shrink: 0;
 }
 
+.footer-contact a {
+    color: rgba(255,255,255,0.6);
+    transition: var(--transition);
+}
+
+.footer-contact a:hover {
+    color: var(--accent);
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
