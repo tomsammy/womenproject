@@ -163,14 +163,17 @@ img {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.25rem;
+    align-items: center;
 }
 
 .nav-links a {
     font-weight: 500;
+    font-size: 0.95rem;
     color: var(--text-dark);
     position: relative;
     transition: var(--transition);
+    white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -1015,7 +1018,7 @@ img {
 }
 
 /* --- Responsive --- */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .hero h1 { font-size: 3rem; }
     
     .founder-grid, .model-grid {
@@ -1031,7 +1034,7 @@ img {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .nav-links {
         position: absolute;
         top: 80px;
