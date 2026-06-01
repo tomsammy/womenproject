@@ -80,6 +80,7 @@ img {
     transition: var(--transition);
     cursor: pointer;
     border: 2px solid transparent;
+    white-space: nowrap;
 }
 
 .btn-primary {
@@ -130,6 +131,7 @@ img {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
 }
 
 .brand-logo {
@@ -151,6 +153,7 @@ img {
     font-size: 1.3rem;
     color: var(--primary);
     line-height: 1.2;
+    white-space: nowrap;
 }
 
 .brand-subtitle {
@@ -159,12 +162,14 @@ img {
     letter-spacing: 1px;
     color: var(--accent);
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .nav-links {
     display: flex;
     gap: 1.25rem;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .nav-links a {
@@ -1018,6 +1023,31 @@ img {
 }
 
 /* --- Responsive --- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .nav-container {
+        padding: 0 2rem;
+    }
+    .nav-links {
+        gap: 1rem;
+    }
+    .nav-links a {
+        font-size: 0.88rem;
+    }
+    .brand {
+        gap: 0.75rem;
+    }
+    .brand-title {
+        font-size: 1.15rem;
+    }
+    .brand-subtitle {
+        font-size: 0.7rem;
+    }
+    .btn {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .hero h1 { font-size: 3rem; }
     
