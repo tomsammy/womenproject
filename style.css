@@ -1594,4 +1594,163 @@ img {
     }
 }
 
+/* --- Bank Details Card --- */
+.bank-details-card {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+
+.bank-details-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.bank-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.bank-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.bank-icon {
+    width: 28px;
+    height: 28px;
+    color: rgba(255,255,255,0.7);
+}
+
+.bank-card-body {
+    margin-bottom: 1.5rem;
+}
+
+.account-num-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.account-num-wrapper .label,
+.bank-card-holder .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1.5px;
+}
+
+.num-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.account-number {
+    font-family: monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.copy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.copy-badge:hover {
+    background: var(--accent);
+    color: var(--primary-dark);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.copy-badge.copied {
+    background: #2e7d32;
+    color: var(--white);
+    border-color: #2e7d32;
+}
+
+.bank-card-footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+}
+
+.bank-card-holder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.bank-card-holder .value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* --- Transfer Notice --- */
+.transfer-notice {
+    display: flex;
+    gap: 1rem;
+    background: rgba(74, 21, 75, 0.05);
+    border-left: 4px solid var(--primary);
+    padding: 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+.transfer-notice i {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.transfer-notice p {
+    margin: 0;
+}
+
+.transfer-notice a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.transfer-notice a:hover {
+    color: var(--primary-light);
+}
+
 

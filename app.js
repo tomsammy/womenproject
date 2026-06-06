@@ -16,9 +16,6 @@ const applicationForm = document.getElementById('application-form');
 // Donation Modal Elements
 const donateModal = document.getElementById('donate-modal');
 const donateModalClose = document.getElementById('donate-modal-close');
-const donationForm = document.getElementById('donation-form');
-const presetBtns = document.querySelectorAll('.preset-btn');
-const donorAmountInput = document.getElementById('donorAmount');
 
 // Toast Elements
 const toast = document.getElementById('success-toast');
@@ -277,130 +274,65 @@ applicationForm.addEventListener('submit', (e) => {
 
 // --- Donation Modal Logic ---
 window.openDonateModal = function() {
-    donateModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (donateModal) {
+        donateModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 };
 
 window.closeDonateModal = function() {
-    donateModal.classList.remove('active');
-    document.body.style.overflow = '';
-    donationForm.reset();
-    presetBtns.forEach(btn => btn.classList.remove('active'));
+    if (donateModal) {
+        donateModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 };
 
-donateModalClose.addEventListener('click', closeDonateModal);
-donateModal.addEventListener('click', (e) => {
-    if (e.target === donateModal) {
-        closeDonateModal();
-    }
-});
-
-// Preset Buttons Selection
-presetBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        presetBtns.forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        donorAmountInput.value = e.target.getAttribute('data-amount');
-    });
-});
-
-// Reset presets if amount input changes
-donorAmountInput.addEventListener('input', () => {
-    const val = donorAmountInput.value;
-    presetBtns.forEach(btn => {
-        if (btn.getAttribute('data-amount') === val) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
+if (donateModalClose) {
+    donateModalClose.addEventListener('click', closeDonateModal);
+}
+if (donateModal) {
+    donateModal.addEventListener('click', (e) => {
+        if (e.target === donateModal) {
+            closeDonateModal();
         }
     });
-});
+}
 
-// Donation Form Submission with Paystack Checkout
-donationForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Copy Bank Account Number Function
+window.copyAccountNumber = function() {
+    const numEl = document.getElementById('account-number-val');
+    const btnEl = document.getElementById('copy-account-btn');
     
-    const donorName = document.getElementById('donorName').value.trim();
-    const donorEmail = document.getElementById('donorEmail').value.trim();
-    const amount = parseFloat(donorAmountInput.value);
-
-    if (!donorName || !donorEmail || isNaN(amount) || amount < 500) {
-        alert('Please fill out all fields. Minimum donation is ₦500.');
-        return;
-    }
-
-    const submitBtn = donationForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
+    if (!numEl || !btnEl) return;
     
-    submitBtn.textContent = 'Initializing...';
-    submitBtn.disabled = true;
-
-    // Fetch config for Paystack public key
-    fetch('/api/config')
-        .then(res => res.json())
-        .then(config => {
-            if (!config.paystackPublicKey) {
-                throw new Error('Paystack public key is not configured.');
+    const textToCopy = numEl.textContent.trim();
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const copyText = btnEl.querySelector('.copy-text');
+        const copyIcon = btnEl.querySelector('.copy-icon');
+        
+        if (!copyText) return;
+        
+        const originalText = copyText.textContent;
+        btnEl.classList.add('copied');
+        copyText.textContent = 'Copied!';
+        if (copyIcon) {
+            copyIcon.setAttribute('data-lucide', 'check');
+            lucide.createIcons();
+        }
+        
+        setTimeout(() => {
+            btnEl.classList.remove('copied');
+            copyText.textContent = originalText;
+            if (copyIcon) {
+                copyIcon.setAttribute('data-lucide', 'copy');
+                lucide.createIcons();
             }
-            
-            const handler = PaystackPop.setup({
-                key: config.paystackPublicKey,
-                email: donorEmail,
-                amount: amount * 100, // in kobo
-                currency: 'NGN',
-                ref: 'WA-DON-' + Math.floor((Math.random() * 1000000000) + 1),
-                callback: function(response) {
-                    submitBtn.textContent = 'Recording...';
-                    
-                    const payload = {
-                        fullName: donorName,
-                        email: donorEmail,
-                        amount: amount,
-                        reference: response.reference,
-                        status: 'Success'
-                    };
-                    
-                    fetch('/api/donations', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                        if (data.success) {
-                            closeDonateModal();
-                            showToast('Donation Successful!', 'Thank you for your generous support! Your contribution makes a direct difference in restoring dignity to African women.');
-                        } else {
-                            alert(data.message || 'Donation was successful, but we failed to record it locally.');
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Error logging donation:', err);
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                        alert('Donation was successful, but we could not connect to record it.');
-                    });
-                },
-                onClose: function() {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    alert('Donation transaction cancelled.');
-                }
-            });
-            
-            handler.openIframe();
-        })
-        .catch(err => {
-            console.error('Error initializing Paystack:', err);
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            alert('Could not initialize payment gateway. Please verify server configuration.');
-        });
-});
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy account number:', err);
+    });
+};
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -408,15 +340,25 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroSlider();
     
     // Intercept all donate link clicks to open modal
-    document.querySelectorAll('a[href="#donate"]').forEach(anchor => {
+    document.querySelectorAll('a[href="#donate"], a[href="/#donate"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
-            e.preventDefault();
-            openDonateModal();
+            const currentPath = window.location.pathname;
+            if (currentPath === '/' || currentPath === '/index.html' || currentPath.endsWith('/')) {
+                e.preventDefault();
+                openDonateModal();
+            }
         });
     });
     
+    // Check hash on load to open donation modal
+    if (window.location.hash === '#donate') {
+        openDonateModal();
+    }
+    
     // Set variable for header padding transition
-    header.style.transition = 'padding 0.3s ease, box-shadow 0.3s ease';
+    if (header) {
+        header.style.transition = 'padding 0.3s ease, box-shadow 0.3s ease';
+    }
 });
 
 // --- Hero Section Image Slider ---

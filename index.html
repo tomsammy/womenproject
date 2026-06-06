@@ -327,38 +327,39 @@
             <button class="modal-close" id="donate-modal-close"><i data-lucide="x"></i></button>
             <div class="modal-header">
                 <h3>Support Our Mission</h3>
-                <span class="location-badge">Woman Africa International Foundation</span>
+                <span class="location-badge">Direct Bank Transfer</span>
             </div>
-            <p class="modal-desc">Your donations help us fund skills development, safe shelters, and emergency response spaces for vulnerable women across Africa.</p>
+            <p class="modal-desc">Your donations help us fund skills development, safe shelters, and emergency response spaces for vulnerable women across Africa. Please make a direct deposit or bank transfer to our official account details below:</p>
             
-            <form id="donation-form" class="application-form">
-                <h4>Make a Donation</h4>
-                <div class="form-group">
-                    <label for="donorName">Full Name</label>
-                    <input type="text" id="donorName" name="donorName" required placeholder="Enter your full name">
+            <div class="bank-details-card">
+                <div class="bank-card-header">
+                    <span class="bank-name">UBA PLC</span>
+                    <i data-lucide="landmark" class="bank-icon"></i>
                 </div>
-                <div class="form-group">
-                    <label for="donorEmail">Email Address</label>
-                    <input type="email" id="donorEmail" name="donorEmail" required placeholder="Enter your email">
-                </div>
-                
-                <div class="form-group">
-                    <label>Select Amount (NGN)</label>
-                    <div class="amount-presets">
-                        <button type="button" class="preset-btn" data-amount="2000">₦2,000</button>
-                        <button type="button" class="preset-btn" data-amount="5000">₦5,000</button>
-                        <button type="button" class="preset-btn" data-amount="10000">₦10,000</button>
-                        <button type="button" class="preset-btn" data-amount="25000">₦25,000</button>
+                <div class="bank-card-body">
+                    <div class="account-num-wrapper">
+                        <span class="label">ACCOUNT NUMBER</span>
+                        <div class="num-row">
+                            <span class="account-number" id="account-number-val">3003078296</span>
+                            <button class="copy-badge" id="copy-account-btn" onclick="copyAccountNumber()">
+                                <i data-lucide="copy" class="copy-icon"></i>
+                                <span class="copy-text">Copy</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="donorAmount">Custom Amount (NGN)</label>
-                    <input type="number" id="donorAmount" name="donorAmount" required min="500" placeholder="Enter amount (Min 500)">
+                <div class="bank-card-footer">
+                    <div class="bank-card-holder">
+                        <span class="label">ACCOUNT NAME</span>
+                        <span class="value">Women Africa International Foundation</span>
+                    </div>
                 </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
-            </form>
+            </div>
+
+            <div class="transfer-notice">
+                <i data-lucide="info"></i>
+                <p>After making your transfer, please send your payment confirmation or receipt to <a href="mailto:ijeomaemeribe11@gmail.com">ijeomaemeribe11@gmail.com</a> or WhatsApp <a href="tel:08064274621">08064274621</a> to help us track and acknowledge your support.</p>
+            </div>
         </div>
     </div>
 
@@ -376,7 +377,6 @@
         </div>
     </div>
 
-    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="app.js"></script>
     <script>
         lucide.createIcons();
